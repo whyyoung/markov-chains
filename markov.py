@@ -36,25 +36,31 @@ def make_chains(text_string):
     while i < len(text_string) - 2:
         bi_gram = (text_string[i], text_string[i + 1])
 
-        if chains.get(bi_gram) == None:
+        if chains.get(bi_gram) is None:
             chains[bi_gram] = [text_string[i + 2]]
         else:
             chains[bi_gram] = chains.get(bi_gram) + [(text_string[i + 2])]
         i += 1
 
-    print chains
     return chains
 
-make_chains(open_and_read_file("green-eggs.txt"))
 
 def make_text(chains):
     """Takes dictionary of markov chains; returns random text."""
 
-    text = ""
+    master_text = choice(chains.keys())
+    text = [master_text[0], master_text[1]]
+
+    while chains.get(master_text):
+        next_word = choice(chains.get(master_text))
+        text.append(next_word)
+        master_text = (text[-2], text[-1])
 
     # your code goes here
 
-    return text
+
+    return ' '.join(text)
+
 
 
 input_path = "green-eggs.txt"
@@ -64,7 +70,7 @@ input_text = open_and_read_file(input_path)
 
 # Get a Markov chain
 chains = make_chains(input_text)
-
+ 
 # Produce random text
 random_text = make_text(chains)
 
