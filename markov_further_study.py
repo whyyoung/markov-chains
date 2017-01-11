@@ -56,18 +56,16 @@ def make_text(chains):
         for item in chains:
             if item[0][0] in string.ascii_uppercase:
                 master_text = item
-    text = [master_text[0], master_text[1]] #figure out how to have a tuple item[0], item[1]
+    text = [master_text[0], master_text[1]]
 
-    while chains.get(master_text) is not None:  #and also ends on punctuation mark
+    while chains.get(master_text) is not None and len(text) < 140:
         next_word = choice(chains.get(master_text))
         text.append(next_word)
         master_text = (text[-2], text[-1])
 
     # your code goes here
 
-
     return ' '.join(text)
-
 
 
 input_path = argv[1]
